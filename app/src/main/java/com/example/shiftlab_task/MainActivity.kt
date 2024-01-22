@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ShiftlabtaskTheme(darkTheme = false) {
-                Navigation(startDestination = Destinations.REGISTRATION_SCREEN)
+                Navigation()
             }
         }
     }

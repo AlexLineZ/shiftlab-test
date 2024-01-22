@@ -134,6 +134,8 @@ class RegistrationViewModel(
             }
 
             is RegistrationIntent.UpdateButtonAvailable -> {
+                Log.d("Test", hasNotEmpty().toString())
+                Log.d("Test2", hasNotErrors().toString())
                 if (hasNotErrors() && hasNotEmpty()) {
                     _state.value = state.value.copy(
                         isButtonAvailable = true
@@ -156,9 +158,9 @@ class RegistrationViewModel(
 
     private fun hasNotEmpty(): Boolean {
         return state.value.firstName.isNotEmpty()
-                || state.value.secondName.isNotEmpty()
-                || state.value.birthday.isNotEmpty()
-                || state.value.password.isNotEmpty()
-                || state.value.confirmPassword.isNotEmpty()
+                && state.value.secondName.isNotEmpty()
+                && state.value.birthday.isNotEmpty()
+                && state.value.password.isNotEmpty()
+                && state.value.confirmPassword.isNotEmpty()
     }
 }

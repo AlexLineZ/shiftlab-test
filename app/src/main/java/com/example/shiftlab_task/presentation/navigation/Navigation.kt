@@ -1,15 +1,12 @@
 package com.example.shiftlab_task.presentation.navigation
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import android.content.Context
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.shiftlab_task.data.localstorage.LocalStorage
 import com.example.shiftlab_task.presentation.navigation.router.AppRouter
 import com.example.shiftlab_task.presentation.screen.main.MainScreen
 import com.example.shiftlab_task.presentation.screen.main.MainViewModel
@@ -22,9 +19,7 @@ object Destinations {
 }
 
 @Composable
-fun Navigation(
-    startDestination: String
-){
+fun Navigation(){
     val navController = rememberNavController()
 
     val registrationViewModel = RegistrationViewModel(
@@ -35,7 +30,7 @@ fun Navigation(
 
     NavHost(
         navController = navController,
-        startDestination = startDestination
+        startDestination = chooseStartDestination(LocalContext.current)
     ) {
         composable(Destinations.REGISTRATION_SCREEN) {
             RegistrationScreen(
@@ -47,6 +42,15 @@ fun Navigation(
                 viewModel = mainViewModel
             )
         }
+    }
+}
+
+private fun chooseStartDestination(context: Context): String{
+    val hasData = LocalStorage(context).hasData()
+    return if (hasData){
+        Destinations.MAIN_SCREEN
+    } else {
+        Destinations.REGISTRATION_SCREEN
     }
 }
 
