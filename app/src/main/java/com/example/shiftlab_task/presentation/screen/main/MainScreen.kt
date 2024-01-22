@@ -11,6 +11,8 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
@@ -23,6 +25,7 @@ import com.example.shiftlab_task.R
 @Composable
 fun MainScreen(viewModel: MainViewModel){
     val focusManager = LocalFocusManager.current
+    val state by viewModel.state.collectAsState()
 
     Column(
         modifier = Modifier
@@ -39,7 +42,7 @@ fun MainScreen(viewModel: MainViewModel){
     ) {
         Button(
             onClick = {
-
+                viewModel.processIntent(MainIntent.ClickOnButton)
             },
             modifier = Modifier
                 .fillMaxHeight(0.5f)
@@ -52,25 +55,25 @@ fun MainScreen(viewModel: MainViewModel){
             )
         }
 
-//        if (isWelcomeAlertVisible) {
-//            AlertDialog(
-//                onDismissRequest = { isWelcomeAlertVisible = false },
-//                title = {
-//                    Text(text = stringResource(id = R.string.welcome))
-//                },
-//                text = {
-//                    Text("Привет, $name!")
-//                },
-//                confirmButton = {
-//                    Button(
-//                        onClick = {
-//                            isWelcomeAlertVisible = false
-//                        }
-//                    ) {
-//                        Text(stringResource(id = R.string.ok))
-//                    }
-//                }
-//            )
-//        }
+        if (state.isAlertDialogVisible) {
+            AlertDialog(
+                onDismissRequest = {viewModel.processIntent(MainIntent.UpdateAlertDialogVisible)},
+                title = {
+                    Text(text = stringResource(id = R.string.welcome))
+                },
+                text = {
+                    Text("Привет, ${state.userName}!")
+                },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            viewModel.processIntent(MainIntent.UpdateAlertDialogVisible)
+                        }
+                    ) {
+                        Text(stringResource(id = R.string.ok))
+                    }
+                }
+            )
+        }
     }
 }

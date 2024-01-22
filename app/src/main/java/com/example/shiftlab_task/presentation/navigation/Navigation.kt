@@ -31,7 +31,7 @@ fun Navigation(
         LocalContext.current,
         AppRouter(navController)
     )
-    val mainViewModel = MainViewModel()
+    val mainViewModel = MainViewModel(LocalContext.current)
 
     NavHost(
         navController = navController,

@@ -1,6 +1,7 @@
 package com.example.shiftlab_task.presentation.screen.registration
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.shiftlab_task.common.Constants
 import com.example.shiftlab_task.data.model.UserModel
@@ -70,6 +71,7 @@ class RegistrationViewModel(
                     SecondNameValidator(),
                     state.value.secondName)
                 )
+                processIntent(RegistrationIntent.UpdateButtonAvailable)
             }
             is RegistrationIntent.UpdateConfirmPassword -> {
                 _state.value = state.value.copy(confirmPassword = intent.confirmPassword.trim())
@@ -79,12 +81,14 @@ class RegistrationViewModel(
                         state.value.password
                     )
                 )
+                processIntent(RegistrationIntent.UpdateButtonAvailable)
             }
             is RegistrationIntent.UpdatePassword -> {
                 _state.value = state.value.copy(password = intent.password.trim())
                 processIntent(
                     RegistrationIntent.UpdateErrorText(PasswordValidator(), intent.password)
                 )
+                processIntent(RegistrationIntent.UpdateButtonAvailable)
             }
             is RegistrationIntent.UpdateConfirmPasswordVisibility -> {
                 _state.value = state.value.copy(
@@ -130,7 +134,7 @@ class RegistrationViewModel(
             }
 
             is RegistrationIntent.UpdateButtonAvailable -> {
-                if (hasNotErrors() && !hasEmpty()) {
+                if (hasNotErrors() && hasNotEmpty()) {
                     _state.value = state.value.copy(
                         isButtonAvailable = true
                     )
@@ -150,7 +154,7 @@ class RegistrationViewModel(
                 && state.value.isErrorConfirmPasswordText == null
     }
 
-    private fun hasEmpty(): Boolean {
+    private fun hasNotEmpty(): Boolean {
         return state.value.firstName.isNotEmpty()
                 || state.value.secondName.isNotEmpty()
                 || state.value.birthday.isNotEmpty()
