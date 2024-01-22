@@ -60,7 +60,7 @@ fun RegistrationScreen(viewModel: RegistrationViewModel) {
         )
 
         Text(
-            text = "Регистрация",
+            text = stringResource(id = R.string.register),
             style = MaterialTheme.typography.titleLarge
         )
 
@@ -101,7 +101,9 @@ fun RegistrationScreen(viewModel: RegistrationViewModel) {
             value = state.confirmPassword,
             onValueChange = {viewModel.processIntent(RegistrationIntent.UpdateConfirmPassword(it))},
             transformationState = state.isConfirmPasswordHide,
-            onButtonClick = {viewModel.processIntent(RegistrationIntent.UpdateConfirmPasswordVisibility)},
+            onButtonClick = {
+                viewModel.processIntent(RegistrationIntent.UpdateConfirmPasswordVisibility)
+            },
             errorText = state.isErrorConfirmPasswordText,
             modifier = Modifier
         )
@@ -112,7 +114,8 @@ fun RegistrationScreen(viewModel: RegistrationViewModel) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(IntrinsicSize.Min)
-                .padding(top = 32.dp)
+                .padding(top = 32.dp),
+            enabled = state.isButtonAvailable
         ) {
             Text(
                 text = stringResource(id = R.string.register),

@@ -8,6 +8,7 @@ data class RegistrationState (
 
     val isDatePickerOpened: Boolean,
     val isSecondScreenAvailable: Boolean,
+    val isButtonAvailable: Boolean,
 
     val password: String,
     val confirmPassword: String,

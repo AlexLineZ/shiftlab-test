@@ -8,7 +8,7 @@ class AppRouter(
 ) {
     fun toMain(){
         navController.navigate(Destinations.MAIN_SCREEN) {
-            popUpTo(Destinations.REGISTRATION_SCREEN)
+            popUpTo(0)
         }
     }
 }

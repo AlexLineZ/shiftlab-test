@@ -17,4 +17,5 @@
     <string name="cancel">Отмена</string>
 
     <string name="register">Регистрация</string>
+    <string name="welcome">Приветствие</string>
 </resources>

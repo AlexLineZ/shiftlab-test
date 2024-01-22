@@ -12,6 +12,7 @@ sealed class RegistrationIntent {
     data class UpdatePassword(val password: String) : RegistrationIntent()
     data class UpdateConfirmPassword(val confirmPassword: String) : RegistrationIntent()
     data object UpdatePasswordVisibility : RegistrationIntent()
+    data object UpdateButtonAvailable : RegistrationIntent()
     data object UpdateConfirmPasswordVisibility : RegistrationIntent()
     data class Registration(val registrationState: RegistrationState): RegistrationIntent()
     data class UpdateErrorText(
