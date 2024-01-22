@@ -60,7 +60,7 @@ class RegistrationViewModel(
             is RegistrationIntent.UpdateFirstName -> {
                 _state.value = state.value.copy(firstName = intent.firstName.trim())
                 processIntent(
-                    RegistrationIntent.UpdateErrorText(FirstNameValidator(), intent.firstName)
+                    RegistrationIntent.UpdateErrorText(FirstNameValidator(), state.value.firstName)
                 )
                 processIntent(RegistrationIntent.UpdateButtonAvailable)
             }
@@ -68,14 +68,14 @@ class RegistrationViewModel(
                 _state.value = state.value.copy(secondName = intent.secondName.trim())
                 processIntent(RegistrationIntent.UpdateErrorText(
                     SecondNameValidator(),
-                    intent.secondName)
+                    state.value.secondName)
                 )
             }
             is RegistrationIntent.UpdateConfirmPassword -> {
                 _state.value = state.value.copy(confirmPassword = intent.confirmPassword.trim())
                 processIntent(
                     RegistrationIntent.UpdateErrorText(ConfirmPasswordValidator(),
-                        intent.confirmPassword,
+                        state.value.confirmPassword,
                         state.value.password
                     )
                 )
